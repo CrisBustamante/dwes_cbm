@@ -1,46 +1,63 @@
 package org.dwescbm;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
-public class Animal {
-    @JacksonXmlProperty(isAttribute = true)
-    private String id;
-    private String name;
-    private String species;
-    private int age;
-    private String sex;
-    private LocalDate entryDate;
-    private boolean adopted;
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 
-    public Animal(String id, String name, String species, int age, String sex, LocalDate entryDate, boolean adopted) {
-        this.id = id;
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        this.sex = sex;
-        this.entryDate = entryDate;
-        this.adopted = adopted;
+@JacksonXmlRootElement(localName = "animal")
+public class Animal {
+
+    public enum AnimalSex {
+        Macho, Hembra
     }
+
+    @JacksonXmlProperty(localName = "id")
+    private int id;
+
+    @JacksonXmlProperty(localName = "nombre")
+    private String name;
+
+    @JacksonXmlProperty(localName = "especie")
+    private String species;
+
+    @JacksonXmlProperty(localName = "edad")
+    private int age;
+
+    @JacksonXmlProperty(localName = "sexo")
+    private AnimalSex sex;
+
+    @JacksonXmlProperty(localName = "fechaIngreso")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate entryDate;
+
+    @JacksonXmlProperty(localName = "adoptado")
+    private boolean adopted;
 
     @Override
     public String toString() {
-        return String.format(
-                "Animal {\n" +
-                        "  ID: '%s',\n" +
-                        "  Nombre: '%s',\n" +
-                        "  Especie: '%s',\n" +
-                        "  Edad: %d,\n" +
-                        "  Sexo: '%s',\n" +
-                        "  Fecha de Ingreso: %s,\n" +
-                        "  Adoptado: %b\n" +
-                        "}",
-                id, name, species, age, sex, entryDate, adopted
-        );
-    }
-
-
-    public Object getId() {
-        return id;
+        return "ID: " + id +
+                " \nNOMBRE: " + name +
+                " \nESPECIE: " + species +
+                " \nEDAD: " + age +
+                " \nSEXO: " + sex +
+                " \nFECHA DE INGRESO: " + entryDate +
+                " \nESTA ADOPTADO: " + adopted +
+                " \n---------------------------";
     }
 }
+

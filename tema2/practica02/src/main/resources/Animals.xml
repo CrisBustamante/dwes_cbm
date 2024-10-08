@@ -1,0 +1,31 @@
+<protectoraDeAnimales>
+  <animales>
+    <animal>
+      <id>1</id>
+      <nombre>Luna</nombre>
+      <especie>Perro</especie>
+      <edad>3</edad>
+      <sexo>Hembra</sexo>
+      <fechaIngreso>2024-01-15</fechaIngreso>
+      <adoptado>true</adoptado>
+    </animal>
+    <animal>
+      <id>2</id>
+      <nombre>Miau</nombre>
+      <especie>Gato</especie>
+      <edad>2</edad>
+      <sexo>Macho</sexo>
+      <fechaIngreso>2024-01-15</fechaIngreso>
+      <adoptado>false</adoptado>
+    </animal>
+    <animal>
+      <id>3</id>
+      <nombre>Eloy</nombre>
+      <especie>Mono</especie>
+      <edad>19</edad>
+      <sexo>Macho</sexo>
+      <fechaIngreso>2023-05-15</fechaIngreso>
+      <adoptado>true</adoptado>
+    </animal>
+  </animales>
+</protectoraDeAnimales>
