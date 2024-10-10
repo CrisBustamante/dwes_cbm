@@ -1,0 +1,40 @@
+<AnimalShelter>
+  <animales tipo="mamiferos">
+    <animales>
+      <id>1</id>
+      <nombre>Luna</nombre>
+      <especie>Perro</especie>
+      <edad>3</edad>
+      <sexo>Hembra</sexo>
+      <fechaIngreso>2024-01-15</fechaIngreso>
+      <adoptado>true</adoptado>
+    </animales>
+    <animales>
+      <id>2</id>
+      <nombre>Miau</nombre>
+      <especie>Gato</especie>
+      <edad>2</edad>
+      <sexo>Macho</sexo>
+      <fechaIngreso>2024-01-15</fechaIngreso>
+      <adoptado>false</adoptado>
+    </animales>
+    <animales>
+      <id>3</id>
+      <nombre>Eloy</nombre>
+      <especie>Mono</especie>
+      <edad>19</edad>
+      <sexo>Macho</sexo>
+      <fechaIngreso>2023-05-15</fechaIngreso>
+      <adoptado>true</adoptado>
+    </animales>
+    <animales>
+      <id>123</id>
+      <nombre>123</nombre>
+      <especie>123</especie>
+      <edad>123</edad>
+      <sexo>Macho</sexo>
+      <fechaIngreso>2020-01-01</fechaIngreso>
+      <adoptado>true</adoptado>
+    </animales>
+  </animales>
+</AnimalShelter>
