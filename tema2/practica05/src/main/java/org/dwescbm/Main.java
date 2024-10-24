@@ -1,5 +1,8 @@
 package org.dwescbm;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -11,11 +14,20 @@ public class Main {
     private static final String DB_PASSWORD = "practica05bbdd";
 
     public static void main(String[] args) {
+
+        // Metodo para conectarse a la base de datos
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            System.out.println("CONECTADO A LA BASE DE DATOS EXITOSAMENTE.");
+        } catch (SQLException ex) {
+            System.out.println("ERROR: NO SE HA PODIDO CONECTAR A LA BASE DE DATOS");
+            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
+        }
+
         Scanner scanner = new Scanner(System.in);
         int option;
 
         do {
-            // Imprimir el menú utilizando el método printMenu
+            // Imprimir el menú utilizando el metodo printMenu
             printMenu();
 
             // Validar entrada numérica para seleccionar opción
@@ -69,7 +81,7 @@ public class Main {
         scanner.close();
     }
 
-    // Método para imprimir el menú
+    // Metodo para imprimir el menú
     private static void printMenu() {
         System.out.println("\n--- Menú Principal ---");
         System.out.println("1. Consultar estudiantes por casa");
@@ -86,7 +98,7 @@ public class Main {
         System.out.print("\nSeleccione una opción: ");
     }
 
-    // Método para manejar la opción 1: Consultar estudiantes por casa
+    // Metodo para manejar la opción 1: Consultar estudiantes por casa
     private static void handleStudentsByHouse(Scanner scanner) {
         System.out.print("Ingrese el nombre de la casa: ");
         String houseName = scanner.nextLine().trim();
@@ -103,7 +115,7 @@ public class Main {
         }
     }
 
-    // Método para manejar la opción 2: Listado de asignaturas obligatorias
+    // Metodo para manejar la opción 2: Listado de asignaturas obligatorias
     private static void handleMandatorySubjects() {
         List<Subject> mandatorySubjects = HogwartsService.getMandatorySubjects(DB_URL, DB_USER, DB_PASSWORD);
         if (mandatorySubjects.isEmpty()) {
@@ -114,7 +126,7 @@ public class Main {
         }
     }
 
-    // Método para manejar la opción 3: Obtener mascota de un estudiante específico
+    // Metodo para manejar la opción 3: Obtener mascota de un estudiante específico
     private static void handleStudentPet(Scanner scanner) {
         System.out.print("Ingrese el nombre del estudiante: ");
         String studentName = scanner.nextLine().trim();
@@ -132,7 +144,7 @@ public class Main {
         }
     }
 
-    // Método para manejar la opción 4: Listar estudiantes sin mascota
+    // Metodo para manejar la opción 4: Listar estudiantes sin mascota
     private static void handleStudentsWithoutPet() {
         List<Student> studentsWithoutPet = HogwartsService.getStudentsWithoutPet(DB_URL, DB_USER, DB_PASSWORD);
         if (studentsWithoutPet.isEmpty()) {
@@ -143,7 +155,7 @@ public class Main {
         }
     }
 
-    // Método para manejar la opción 5: Promedio de calificaciones de un estudiante
+    // Metodo para manejar la opción 5: Promedio de calificaciones de un estudiante
     private static void handleAverageGrades(Scanner scanner) {
         System.out.print("Ingrese el nombre del estudiante: ");
         String studentForGradesName = scanner.nextLine().trim();
@@ -157,7 +169,7 @@ public class Main {
         System.out.println("\nPromedio de calificaciones de " + studentForGradesName + " " + studentForGradesSurname + ": " + averageGrade);
     }
 
-    // Método para manejar la opción 6: Número de estudiantes por casa
+    // Metodo para manejar la opción 6: Número de estudiantes por casa
     private static void handleStudentsAmountByHouse() {
         List<House> houses = HogwartsService.getHouses(DB_URL, DB_USER, DB_PASSWORD);
         List<Student> allStudents = HogwartsService.getStudents(DB_URL, DB_USER, DB_PASSWORD);
@@ -169,7 +181,7 @@ public class Main {
         }
     }
 
-    // Método para manejar la opción 7: Estudiantes matriculados en una asignatura específica
+    // Metodo para manejar la opción 7: Estudiantes matriculados en una asignatura específica
     private static void handleEnrolledStudentsInSubject(Scanner scanner) {
         System.out.print("Ingrese el nombre de la asignatura: ");
         String subjectName = scanner.nextLine().trim();
@@ -186,17 +198,17 @@ public class Main {
         }
     }
 
-    // Método para manejar la opción 8: Insertar un nuevo estudiante
+    // Metodo para manejar la opción 8: Insertar un nuevo estudiante
     private static void handleInsertNewStudent(Scanner scanner) {
         HogwartsService.insertNewStudent(scanner, HogwartsService.getStudents(DB_URL, DB_USER, DB_PASSWORD), DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    // Método para manejar la opción 9: Modificar aula de una asignatura
+    // Metodo para manejar la opción 9: Modificar aula de una asignatura
     private static void handleAlterClassroom(Scanner scanner) {
         HogwartsService.alterClassroomInSubject(scanner, DB_URL, DB_USER, DB_PASSWORD);
     }
 
-    // Método para manejar la opción 10: Desmatricular a un estudiante de una asignatura
+    // Metodo para manejar la opción 10: Desmatricular a un estudiante de una asignatura
     private static void handleDeregisterStudentFromSubject(Scanner scanner) {
         try {
             System.out.print("Ingrese el ID del estudiante: ");
