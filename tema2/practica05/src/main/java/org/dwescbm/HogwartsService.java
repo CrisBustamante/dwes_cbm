@@ -285,7 +285,7 @@ public class HogwartsService {
     // Metodo para insertar un nuevo estudiante en la base de datos
     public static void insertNewStudent(Scanner in, List<Student> studentList, String url, String masterName, String masterPasswd) {
         System.out.println("    - Dime los datos del estudiante a insertar: ");
-
+        int newId = studentList.size() + 1; // Asignar un nuevo ID
 
         System.out.print("Nombre: ");
         String name = in.nextLine().trim();

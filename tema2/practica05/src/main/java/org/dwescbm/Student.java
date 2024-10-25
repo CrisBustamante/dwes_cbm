@@ -21,4 +21,6 @@ public class Student {
     private int courseYear;
     private LocalDate dateOfBirth;
 
+    public Student(String name, String surname, int houseID, int year, LocalDate birthDate) {
+    }
 }
