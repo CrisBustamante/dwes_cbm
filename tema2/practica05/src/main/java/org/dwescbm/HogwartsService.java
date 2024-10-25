@@ -285,7 +285,7 @@ public class HogwartsService {
     // Metodo para insertar un nuevo estudiante en la base de datos
     public static void insertNewStudent(Scanner in, List<Student> studentList, String url, String masterName, String masterPasswd) {
         System.out.println("    - Dime los datos del estudiante a insertar: ");
-        int newId = studentList.size() + 1; // Asignar un nuevo ID
+
 
         System.out.print("Nombre: ");
         String name = in.nextLine().trim();
@@ -300,7 +300,7 @@ public class HogwartsService {
         LocalDate birthDate = LocalDate.parse(birthDateInput, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         in.nextLine(); // Consumir el salto de línea
 
-        Student newStudent = new Student(newId, name, surname, houseID, year, birthDate);
+        Student newStudent = new Student(name, surname, houseID, year, birthDate);
 
         String SQLquery = "INSERT INTO Estudiante (nombre, apellido, id_casa, año_curso, fecha_nacimiento) VALUES (?, ?, ?, ?, ?)";
 
