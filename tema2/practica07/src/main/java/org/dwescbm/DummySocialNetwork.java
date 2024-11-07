@@ -9,13 +9,17 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.types.ObjectId;
 import org.bson.codecs.pojo.PojoCodecProvider;
+
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.and;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
 import java.util.Scanner;
 
 public class DummySocialNetwork {
     private static MongoCollection<Profile> profileCollection;
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         setupMongoClient();
@@ -25,40 +29,21 @@ public class DummySocialNetwork {
         do {
             opcion = menu();
             switch (opcion) {
-                case 1:
-                    createProfile();
-                    break;
-                case 2:
-                    createPost();
-                    break;
-                case 3:
-                    viewProfilePosts();
-                    break;
-                case 4:
-                    viewProfiles();
-                    break;
-                case 5:
-                    viewPostDetail();
-                    break;
-                case 6:
-                    likePost();
-                    break;
-                case 7:
-                    commentOnPost();
-                    break;
-                case 8:
-                    addFriend();
-                    break;
-                case 9:
-                    viewProfileStats();
-                    break;
-                case 10:
-                    viewNetworkStats();
-                    break;
-                default:
-                    System.out.println("Opción no válida");
+                case 1 -> createProfile();
+                case 2 -> createPost();
+                case 3 -> viewProfilePosts();
+                case 4 -> viewProfiles();
+                case 5 -> viewPostDetail();
+                case 6 -> likePost();
+                case 7 -> commentOnPost();
+                case 8 -> addFriend();
+                case 9 -> viewProfileStats();
+                case 10 -> viewNetworkStats();
+                default -> System.out.println("Opción no válida");
             }
         } while (opcion != 0);
+
+        scanner.close();
     }
 
     private static void setupMongoClient() {
@@ -72,12 +57,11 @@ public class DummySocialNetwork {
                 .build();
 
         MongoClient mongoClient = MongoClients.create(clientSettings);
-        MongoDatabase database = mongoClient.getDatabase("crisdummynetwork");
-        profileCollection = database.getCollection("daw2", Profile.class);
+        MongoDatabase database = mongoClient.getDatabase("Albion");
+        profileCollection = database.getCollection("Online", Profile.class);
     }
 
     private static int menu() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Seleccione una opción:");
         System.out.println("0. Salir");
         System.out.println("1. Crear mi perfil");
@@ -94,30 +78,38 @@ public class DummySocialNetwork {
     }
 
     private static void createProfile() {
-        Scanner scanner = new Scanner(System.in);
+        scanner.nextLine();
         System.out.println("Ingrese su nombre:");
-        String name = scanner.nextLine();
+        String firstName = scanner.nextLine();
+        System.out.println("Ingrese su apellido:");
+        String lastName = scanner.nextLine();
         System.out.println("Ingrese su estado:");
         String status = scanner.nextLine();
         System.out.println("Ingrese su edad:");
         int age = scanner.nextInt();
 
-        Profile profile = new Profile(name, status, age);
+        Profile profile = new Profile(firstName, lastName, status, age);
         profileCollection.insertOne(profile);
         System.out.println("Perfil creado exitosamente. Su ID de perfil es: " + profile.getId());
     }
 
+    private static Profile findProfileByName() {
+        scanner.nextLine();
+        System.out.println("Ingrese el nombre del perfil:");
+        String firstName = scanner.nextLine();
+        System.out.println("Ingrese el apellido del perfil:");
+        String lastName = scanner.nextLine();
 
-    private static void createPost() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese el ID del perfil (como cadena ObjectId):");
-        String profileId = scanner.nextLine();
-
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
+        Profile profile = profileCollection.find(and(eq("firstName", firstName), eq("lastName", lastName))).first();
         if (profile == null) {
             System.out.println("Perfil no encontrado.");
-            return;
         }
+        return profile;
+    }
+
+    private static void createPost() {
+        Profile profile = findProfileByName();
+        if (profile == null) return;
 
         System.out.println("Ingrese el título de la publicación:");
         String title = scanner.nextLine();
@@ -126,46 +118,39 @@ public class DummySocialNetwork {
 
         Post post = new Post(title, content);
         profile.getPosts().add(post);
-        profileCollection.replaceOne(eq("_id", new ObjectId(profileId)), profile);
+        profileCollection.replaceOne(eq("_id", profile.getId()), profile);
         System.out.println("Publicación creada exitosamente.");
     }
 
     private static void viewProfiles() {
         for (Profile profile : profileCollection.find()) {
-            System.out.println("Perfil: " + profile.getName() + ", Edad: " + profile.getAge() + ", Estado: " + profile.getStatus());
+            System.out.println("Perfil: " + profile.getFirstName() + " " + profile.getLastName() + ", Edad: " + profile.getAge() + ", Estado: " + profile.getStatus());
         }
     }
 
     private static void viewProfilePosts() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese el ID del perfil:");
-        String profileId = scanner.nextLine();
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
+        Profile profile = findProfileByName();
+        if (profile == null) return;
 
-        if (profile == null) {
-            System.out.println("Perfil no encontrado.");
-            return;
-        }
+        viewProfilePosts(profile);
+    }
 
-        System.out.println("Publicaciones de " + profile.getName() + ":");
+    private static void viewProfilePosts(Profile profile) {
+        System.out.println("Publicaciones de " + profile.getFirstName() + " " + profile.getLastName() + ":");
         for (Post post : profile.getPosts()) {
-            System.out.println("Título: " + post.getTitle() + ", Likes: " + post.getLikes());
+            System.out.println("Título: " + post.getTitle() + ", Likes: " + post.getLikes() + ", Fecha: " + post.getTimestamp());
         }
     }
 
     private static void viewPostDetail() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese el ID del perfil:");
-        String profileId = scanner.nextLine();
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
+        Profile profile = findProfileByName();
+        if (profile == null) return;
 
-        if (profile == null) {
-            System.out.println("Perfil no encontrado.");
-            return;
-        }
+        viewProfilePosts(profile);
 
-        System.out.println("Ingrese el título de la publicación:");
+        System.out.println("Ingrese el título de la publicación a la que desea acceder en detalle:");
         String title = scanner.nextLine();
+
         Post post = profile.getPosts().stream().filter(p -> p.getTitle().equals(title)).findFirst().orElse(null);
 
         if (post == null) {
@@ -176,19 +161,13 @@ public class DummySocialNetwork {
         System.out.println("Título: " + post.getTitle());
         System.out.println("Contenido: " + post.getContent());
         System.out.println("Likes: " + post.getLikes());
-        System.out.println("Comentarios: " + post.getComments());
+        System.out.println("Comentarios: ");
+        post.getComments().forEach(comment -> System.out.println(comment.getTimestamp() + ": " + comment.getContent()));
     }
 
     private static void likePost() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese el ID del perfil:");
-        String profileId = scanner.nextLine();
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
-
-        if (profile == null) {
-            System.out.println("Perfil no encontrado.");
-            return;
-        }
+        Profile profile = findProfileByName();
+        if (profile == null) return;
 
         System.out.println("Ingrese el título de la publicación:");
         String title = scanner.nextLine();
@@ -204,52 +183,14 @@ public class DummySocialNetwork {
         System.out.println("Like añadido a la publicación.");
     }
 
-    private static void commentOnPost() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese el ID del perfil:");
-        String profileId = scanner.nextLine();
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
-
-        if (profile == null) {
-            System.out.println("Perfil no encontrado.");
-            return;
-        }
-
-        System.out.println("Ingrese el título de la publicación:");
-        String title = scanner.nextLine();
-        Post post = profile.getPosts().stream().filter(p -> p.getTitle().equals(title)).findFirst().orElse(null);
-
-        if (post == null) {
-            System.out.println("Publicación no encontrada.");
-            return;
-        }
-
-        System.out.println("Ingrese su comentario:");
-        String comment = scanner.nextLine();
-        post.getComments().add(comment);
-        profileCollection.replaceOne(eq("_id", profile.getId()), profile);
-        System.out.println("Comentario añadido.");
-    }
-
     private static void addFriend() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese su ID de perfil:");
-        String profileId = scanner.nextLine();
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
+        System.out.println("Ingrese su perfil para agregar un amigo:");
+        Profile profile = findProfileByName();
+        if (profile == null) return;
 
-        if (profile == null) {
-            System.out.println("Perfil no encontrado.");
-            return;
-        }
-
-        System.out.println("Ingrese el ID del perfil del amigo:");
-        String friendId = scanner.nextLine();
-        Profile friendProfile = profileCollection.find(eq("_id", new ObjectId(friendId))).first();
-
-        if (friendProfile == null) {
-            System.out.println("Perfil de amigo no encontrado.");
-            return;
-        }
+        System.out.println("Ingrese el perfil del amigo:");
+        Profile friendProfile = findProfileByName();
+        if (friendProfile == null) return;
 
         profile.getFriends().add(friendProfile);
         profileCollection.replaceOne(eq("_id", profile.getId()), profile);
@@ -257,15 +198,8 @@ public class DummySocialNetwork {
     }
 
     private static void viewProfileStats() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese su ID de perfil:");
-        String profileId = scanner.nextLine();
-        Profile profile = profileCollection.find(eq("_id", new ObjectId(profileId))).first();
-
-        if (profile == null) {
-            System.out.println("Perfil no encontrado.");
-            return;
-        }
+        Profile profile = findProfileByName();
+        if (profile == null) return;
 
         int totalLikes = profile.getPosts().stream().mapToInt(Post::getLikes).sum();
         int totalComments = profile.getPosts().stream().mapToInt(post -> post.getComments().size()).sum();
@@ -282,6 +216,32 @@ public class DummySocialNetwork {
 
         System.out.println("Número total de perfiles: " + totalProfiles);
         System.out.println("Número de influencers: " + influencers);
-        // Aquí puedes implementar la lógica para mostrar los 3 perfiles con más amigos y más comentarios.
+    }
+
+    private static void commentOnPost() {
+        Profile profile = findProfileByName();
+        if (profile == null) return;
+
+        viewProfilePosts(profile);
+        System.out.println("Ingrese el título de la publicación a la que desea añadir un comentario:");
+        String title = scanner.nextLine();
+
+        Post post = profile.getPosts().stream()
+                .filter(p -> p.getTitle().equals(title))
+                .findFirst()
+                .orElse(null);
+
+        if (post == null) {
+            System.out.println("Publicación no encontrada.");
+            return;
+        }
+
+        System.out.println("Ingrese su comentario:");
+        String commentContent = scanner.nextLine();
+        Comment comment = new Comment(commentContent);
+
+        post.getComments().add(comment);
+        profileCollection.replaceOne(eq("_id", profile.getId()), profile);
+        System.out.println("Comentario añadido exitosamente.");
     }
 }
