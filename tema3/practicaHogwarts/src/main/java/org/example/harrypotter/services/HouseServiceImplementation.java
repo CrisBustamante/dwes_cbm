@@ -12,9 +12,13 @@ public class HouseServiceImplementation implements HouseService{
         this.houseRepository = houseRepository;
     }
 
-    @Override
     public List<House> getHouses() {
         return houseRepository.getHouses();
+    }
+
+    @Override
+    public List<House> getHouse() {
+        return List.of();
     }
 
     @Override

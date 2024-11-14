@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Casas de Hogwarts</title>
+</head>
+<body>
+<h1>Casas de Hogwarts</h1>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Fundador</th>
+        <th>Mascota</th>
+    </tr>
+    <tr th:each="house : ${houses}">
+        <td><a th:href="@{/house/{name}(name=${house.name})}" th:text="${house.name}"></a></td>
+        <td th:text="${house.founder}"></td>
+        <td th:text="${house.mascot}"></td>
+    </tr>
+</table>
+</body>
+</html>

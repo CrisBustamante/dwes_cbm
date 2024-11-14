@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Detalles de Casa</title>
+</head>
+<body>
+<h1 th:text="${house.name}"></h1>
+<ul>
+    <li>Fundador: <span th:text="${house.founder}"></span></li>
+    <li>Mascota: <span th:text="${house.mascot}"></span></li>
+</ul>
+<h2>Estudiantes</h2>
+<table>
+    <tr>
+        <th>Nombre</th>
+        <th>Patronus</th>
+    </tr>
+    <tr th:each="student : ${students}">
+        <td><a th:href="@{/student(name=${student.name})}" th:text="${student.name}"></a></td>
+        <td th:text="${student.patronus}"></td>
+    </tr>
+</table>
+</body>
+</html>

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepository {
-    List<Student> students;
+    List<Student> students = new ArrayList<>();
     public StudentRepository() {
         HouseRepository houseRepository = new HouseRepository();
         students.add(new Student("Harry Potter", houseRepository.getHouse("Gryffindor"), "Stag"));
