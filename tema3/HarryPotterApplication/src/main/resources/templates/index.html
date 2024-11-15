@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>HarryPotterApplication</title>
+</head>
+<body>
+<h1>Bienvenido a HarryPotterApplication</h1>
+<p>El estudiante random de hoy: <span th:text="${student.name}"> </span></p>
+<p><a th:href="@{/houses}">Ir a la lista de casas</a></p>
+</body>
+</html>

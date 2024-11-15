@@ -16,9 +16,10 @@
         <th>Patronus</th>
     </tr>
     <tr th:each="student : ${students}">
-        <td><a th:href="@{/student(name=${student.name})}" th:text="${student.name}"></a></td>
+        <td><a th:href="@{/studentDetail(name=${student.name})}" th:text="${student.name}"></a></td>
         <td th:text="${student.patronus}"></td>
     </tr>
 </table>
+<p><a th:href="@{/houses}">Volver a la lista de casas</a></p>
 </body>
 </html>

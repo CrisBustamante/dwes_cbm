@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.dwescbm</groupId>
-    <artifactId>practicaHogwarts</artifactId>
+    <artifactId>HarryPotterApplication</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>practicaHogwarts</name>
     <description>practicaHogwarts</description>

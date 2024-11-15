@@ -5,6 +5,6 @@ import org.example.harrypotter.entities.House;
 import java.util.List;
 
 public interface HouseService {
-    List<House> getHouse();
+    List<House> getHouses();
     House getHouseByName(String name);
 }
