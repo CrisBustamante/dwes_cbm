@@ -45,4 +45,21 @@ public class StudentRepository {
         }
         return studentsByHouse;
     }
+
+    public void addStudent(Student student){
+        students.add(student);
+    }
+
+    public void deleteStudent(String name){
+        students.removeIf(s -> s.getName().equalsIgnoreCase(name));
+    }
+
+    public void updateStudent(String name, Student student){
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getName().equalsIgnoreCase(name)) {
+                students.set(i, student);
+                break;
+            }
+        }
+    }
 }

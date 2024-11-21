@@ -27,4 +27,21 @@ public class HouseRepository {
         }
         return null;
     }
+
+    public void addhouse(House house){
+        houses.add(house);
+    }
+
+    public void deleteHouse(String name){
+        houses.removeIf(h -> h.getName().equalsIgnoreCase(name));
+    }
+
+    public void updateHouses(String name, House house) {
+        for (int i = 0; i < houses.size(); i++) {
+            if (houses.get(i).getName().equalsIgnoreCase(name)) {
+                houses.set(i, house);
+                break;
+            }
+        }
+    }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edita Casa</title>
+</head>
+<body>
+<h1>ACTUALIZAR CASA</h1>
+<form th:action="@{/house/update/{name}(name=${house.getName()})}" th:object="${house}" method="post">
+    <p>Nombre: <label>
+        <input type="text" th:field="*{name}">
+    </label></p>
+    <p>Mascota: <label>
+        <input type="text" th:field="*{mascot}">
+    </label></p>
+    <p>Fundador: <label>
+        <input type="text" th:field="*{founder}">
+    </label></p>
+
+    <p>
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Reiniciar">
+    </p>
+</form>
+</body>
+</html>

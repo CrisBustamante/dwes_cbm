@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>HarryPotterApplication</title>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-<h1>Bienvenido a HarryPotterApplication</h1>
-<p>El estudiante random de hoy: <span th:text="${student.name}"> </span></p>
-<p><a th:href="@{/houses}">Ir a la lista de casas</a></p>
+<h6>
+    <a th:href="@{/houses}" th:text="'Listado de Casas'"></a>
+</h6>
+<hr>
+<h1>
+    <a th:href="@{/house/{name}(name=${house.getName()})}" th:text="${house.getName()}">Nombre_Casa</a>
+</h1>
+<br>
+<h1>
+    <a th:href="@{/student(name=${student.getName()})}" th:text="${student.getName()}">Nombre_Estudiante</a>
+</h1>
 </body>
 </html>

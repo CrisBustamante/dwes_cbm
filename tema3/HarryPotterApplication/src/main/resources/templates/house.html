@@ -1,25 +1,37 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Detalles de Casa</title>
+    <meta charset="UTF-8">
+    <title>Casa detallada</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
+
 </head>
 <body>
-<h1 th:text="${house.name}"></h1>
+<h1 th:text="${house.getName()}"></h1>
 <ul>
-    <li>Fundador: <span th:text="${house.founder}"></span></li>
-    <li>Mascota: <span th:text="${house.mascot}"></span></li>
+    <li>Nombre de la casa: <sp th:text="${house.getName()}"></sp></li>
+    <li>Mascota: <sp th:text="${house.getMascot()}"></sp></li>
+    <li>Fundador: <sp th:text="${house.getFounder()}"></sp></li>
 </ul>
-<h2>Estudiantes</h2>
+<h3>Tabla Estudiantes</h3>
+<p>
+    <a th:href="@{/students/create}" th:text="'Añadir Nuevo Estudiante'">añadir_estudiante</a>
+</p>
 <table>
     <tr>
         <th>Nombre</th>
-        <th>Patronus</th>
     </tr>
     <tr th:each="student : ${students}">
-        <td><a th:href="@{/studentDetail(name=${student.name})}" th:text="${student.name}"></a></td>
-        <td th:text="${student.patronus}"></td>
+        <td>
+            <a th:href="@{/student(name=${student.getName()})}" th:text="${student.getName()}">student_name</a>
+        </td>
+        <td>
+            <a th:href="@{/student/update/{name}(name=${student.getName()})}">Editar estudiante</a>
+        </td>
+        <td>
+            <a th:href="@{/student/delete/{name}(name=${student.getName()})}">Borrar</a>
+        </td>
     </tr>
 </table>
-<p><a th:href="@{/houses}">Volver a la lista de casas</a></p>
 </body>
 </html>

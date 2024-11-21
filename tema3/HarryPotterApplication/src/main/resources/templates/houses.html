@@ -1,20 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <title>Casas de Hogwarts</title>
+    <meta charset="UTF-8">
+    <title>Casas</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
-<h1>Casas de Hogwarts</h1>
+<h1>Casas</h1>
+<p>
+    <a th:href="@{/houses/create}" th:text="'Añadir Nueva Casa'">añadir_casa</a>
+</p>
 <table>
     <tr>
         <th>Nombre</th>
-        <th>Fundador</th>
-        <th>Mascota</th>
     </tr>
     <tr th:each="house : ${houses}">
-        <td><a th:href="@{/house/{name}(name=${house.name})}" th:text="${house.name}"></a></td>
-        <td th:text="${house.founder}"></td>
-        <td th:text="${house.mascot}"></td>
+        <td th:text="${house.getName()}">Nombre</td>
+        <td>
+            <a th:href="@{/house/{name}(name=${house.getName()})}">Detalles (url)</a>
+        </td>
+        <td>
+            <a th:href="@{/house/update/{name}(name=${house.getName()})}">Actualizar información</a>
+        </td>
+        <td>
+            <a th:href="@{/house/delete/{name}(name=${house.getName()})}">Borrar casa</a>
+        </td>
     </tr>
 </table>
 </body>

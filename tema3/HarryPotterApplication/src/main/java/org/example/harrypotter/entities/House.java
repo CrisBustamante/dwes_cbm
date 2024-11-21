@@ -13,4 +13,5 @@ public class House {
     private String name;
     private String mascot;
     private String founder;
+
 }
