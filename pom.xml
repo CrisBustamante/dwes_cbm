@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>tema2/practica03</module>
+        <module>tema3/HarryPotterApplication</module>
     </modules>
 
     <properties>

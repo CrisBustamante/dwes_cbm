@@ -1,31 +1,27 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Casas</title>
-    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
+<p><a th:href="@{/}" th:text="Índice" class = "centrado"></a></p>
 <h1>Casas</h1>
-<p>
-    <a th:href="@{/houses/create}" th:text="'Añadir Nueva Casa'">añadir_casa</a>
-</p>
 <table>
     <tr>
-        <th>Nombre</th>
+        <th>Name</th>
     </tr>
     <tr th:each="house : ${houses}">
-        <td th:text="${house.getName()}">Nombre</td>
         <td>
-            <a th:href="@{/house/{name}(name=${house.getName()})}">Detalles (url)</a>
-        </td>
-        <td>
-            <a th:href="@{/house/update/{name}(name=${house.getName()})}">Actualizar información</a>
-        </td>
-        <td>
-            <a th:href="@{/house/delete/{name}(name=${house.getName()})}">Borrar casa</a>
+            <a th:href="@{/house/{name}(name=${house.name})}" th:text="${house.name}"></a>
+            <a th:href="@{/house/delete/{name}(name=${house.name})}" th:text="Borrar"></a>
+            <a th:href="@{/house/update/{name}(name=${house.name})}" th:text="Modificar"></a>
         </td>
     </tr>
 </table>
+<p><a th:href="@{/houses/create}" th:text="Crear" class="centrado"></a></p>
 </body>
 </html>

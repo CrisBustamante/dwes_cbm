@@ -1,21 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>index</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-<h6>
-    <a th:href="@{/houses}" th:text="'Listado de Casas'"></a>
-</h6>
-<hr>
-<h1>
-    <a th:href="@{/house/{name}(name=${house.getName()})}" th:text="${house.getName()}">Nombre_Casa</a>
-</h1>
-<br>
-<h1>
-    <a th:href="@{/student(name=${student.getName()})}" th:text="${student.getName()}">Nombre_Estudiante</a>
-</h1>
+<p><a th:href="@{/students}" th:text="Buscar" class="centrado"></a></p>
+<p><a th:href="@{/houses/create}" th:text="Crear" class="centrado"></a></p>
+<p class="title"><a th:href="@{/houses}" th:text="Houses" class = "centrado"></a></p>
+<table>
+    <tr>
+        <th>
+            <p>Random student</p>
+        </th>
+        <th>
+            <p>Random house</p>
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{/house/{name}(name=${house.name})}" th:text="${house.name}"></a>
+        </td>
+        <td>
+            <a th:href="@{/student(name=${student.name})}" th:text="${student.name}">Student Name</a>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

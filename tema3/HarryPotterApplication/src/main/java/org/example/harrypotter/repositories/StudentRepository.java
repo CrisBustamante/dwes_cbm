@@ -1,6 +1,5 @@
 package org.example.harrypotter.repositories;
 
-import org.example.harrypotter.entities.House;
 import org.example.harrypotter.entities.Student;
 
 import java.util.ArrayList;
@@ -36,6 +35,36 @@ public class StudentRepository {
         return null;
     }
 
+    public List<Student> getStudentsByFirstLetters(String letters) {
+        List<Student> students2 = new ArrayList<>();
+        for (Student student : students) {
+            if (student.getName().startsWith(letters)) {
+                students2.add(student);
+            }
+        }
+        return students2;
+    }
+
+    public List<Student> getPatronusByFirstLetters(String letters) {
+        List<Student> students2 = new ArrayList<>();
+        for (Student student : students) {
+            if (student.getPatronus().startsWith(letters)) {
+                students2.add(student);
+            }
+        }
+        return students2;
+    }
+
+    public List<Student> getStudentsByNameAndPatronusFirstLetters(String name, String patronus) {
+        List<Student> students2 = new ArrayList<>();
+        for (Student student : students) {
+            if (student.getName().startsWith(name) && student.getPatronus().startsWith(patronus)) {
+                students2.add(student);
+            }
+        }
+        return students2;
+    }
+
     public List<Student> getStudentsByHouse(String houseName) {
         List<Student> studentsByHouse = new ArrayList<>();
         for (Student student : students) {
@@ -46,20 +75,7 @@ public class StudentRepository {
         return studentsByHouse;
     }
 
-    public void addStudent(Student student){
+    public void addStudent(Student student) {
         students.add(student);
-    }
-
-    public void deleteStudent(String name){
-        students.removeIf(s -> s.getName().equalsIgnoreCase(name));
-    }
-
-    public void updateStudent(String name, Student student){
-        for (int i = 0; i < students.size(); i++) {
-            if (students.get(i).getName().equalsIgnoreCase(name)) {
-                students.set(i, student);
-                break;
-            }
-        }
     }
 }

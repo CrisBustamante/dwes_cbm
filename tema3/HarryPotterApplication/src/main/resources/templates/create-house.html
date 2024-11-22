@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Crear Casa</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-<h1>CREAR CASA</h1>
-<form th:action="@{/house/create}" th:object="${house}" method="post">
-    <p>Nombre: <label>
-        <input type="text" th:field="*{name}">
-    </label></p>
-    <p>Mascota: <label>
-        <input type="text" th:field="*{mascot}">
-    </label></p>
-    <p>Fundador: <label>
-        <input type="text" th:field="*{founder}">
-    </label></p>
-
-    <p>
-        <input type="submit" value="Enviar">
-        <input type="reset" value="Reiniciar">
-    </p>
+<p><a th:href="@{/}" th:text="Índice" class = "centrado"></a></p>
+<p class="title"><a th:href="@{/houses}" th:text="Houses" class = "centrado"></a></p>
+<h1>Añadir Casa</h1>
+<form action="#" th:action="@{/houses/create}" th:object="${house}" method="post">
+    <p>Nombre: <input type="text" th:field="*{name}" required="true"/></p>
+    <p>Mascota: <input type="text" th:field="*{mascot}"/></p>
+    <p>Fundador: <input type="text" th:field="*{founder}"/></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 </body>
 </html>

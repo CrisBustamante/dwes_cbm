@@ -28,18 +28,20 @@ public class HouseRepository {
         return null;
     }
 
-    public void addhouse(House house){
+    public void addHouse(House house) {
         houses.add(house);
     }
 
-    public void deleteHouse(String name){
-        houses.removeIf(h -> h.getName().equalsIgnoreCase(name));
+    public void deleteHouse(String name) {
+        houses.removeIf(house -> house.getName().equals(name));
     }
 
-    public void updateHouses(String name, House house) {
-        for (int i = 0; i < houses.size(); i++) {
-            if (houses.get(i).getName().equalsIgnoreCase(name)) {
-                houses.set(i, house);
+    public void updateHouse(String name, House house) {
+        for (House h : houses) {
+            if (h.getName().equals(name)) {
+                h.setName(house.getName());
+                h.setMascot(house.getMascot());
+                h.setFounder(house.getFounder());
                 break;
             }
         }

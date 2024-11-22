@@ -20,6 +20,15 @@ public class StudentServiceImplementation implements StudentService {
         return studentRepository.getStudent(name);
     }
 
+    @Override
+    public List<Student> getStudentsByFirstLetters(String letters) {return studentRepository.getStudentsByFirstLetters(letters);}
+
+    @Override
+    public List<Student> getStudentsByPatronusFirstLetters(String letters) {return studentRepository.getPatronusByFirstLetters(letters);}
+
+    @Override
+    public List<Student> getStudentsByNameAndPatronusFirstLetters(String name, String patronus) {return studentRepository.getStudentsByNameAndPatronusFirstLetters(name, patronus);}
+
     public List<Student> getStudentsByHouse(String house) {
         return studentRepository.getStudentsByHouse(house);
     }
@@ -27,15 +36,5 @@ public class StudentServiceImplementation implements StudentService {
     @Override
     public void addStudent(Student student) {
         studentRepository.addStudent(student);
-    }
-
-    @Override
-    public void deleteStudent(String name) {
-        studentRepository.deleteStudent(name);
-    }
-
-    @Override
-    public void updateStudent(String name, Student student) {
-        studentRepository.updateStudent(name, student);
     }
 }

@@ -1,16 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Estudiante detallado</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Details</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-<h1 th:text="${student.getName()}"></h1>
-<ul>
-    <li>Nombre: <sp th:text="${student.getName()}"></sp></li>
-    <li>Casa: <a th:href="@{/house/{name}(name=${student.getHouse().getName()})}" th:text="${student.getHouse().getName()}"></a></li>
-    <li>Patronus: <sp th:text="${student.getPatronus()}"></sp></li>
-</ul>
+<p><a th:href="@{/}" th:text="Índice" class = centrado></a></p>
+<h1 th:text="${student.name}">Student Name</h1>
+<p><strong>House:</strong>  <a th:href="@{/house/{name}(name=${student.getHouse().getName()})}" th:text="${student.getHouse().getName()}"></a>
+<p><strong>Patronus:</strong> <span th:text="${student.getPatronus()}">Patronus</span></p>
 </body>
 </html>

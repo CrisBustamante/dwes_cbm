@@ -24,7 +24,7 @@ public class HouseServiceImplementation implements HouseService{
 
     @Override
     public void addHouse(House house) {
-        houseRepository.addhouse(house);
+        houseRepository.addHouse(house);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class HouseServiceImplementation implements HouseService{
 
     @Override
     public void updateHouse(String name, House house) {
-        houseRepository.updateHouses(name, house);
+        houseRepository.updateHouse(name, house);
     }
 
 }

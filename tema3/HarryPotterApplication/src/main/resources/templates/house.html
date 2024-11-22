@@ -1,37 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Casa detallada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>House Details</title>
     <link rel="stylesheet" th:href="@{/style.css}" />
-
 </head>
 <body>
-<h1 th:text="${house.getName()}"></h1>
-<ul>
-    <li>Nombre de la casa: <sp th:text="${house.getName()}"></sp></li>
-    <li>Mascota: <sp th:text="${house.getMascot()}"></sp></li>
-    <li>Fundador: <sp th:text="${house.getFounder()}"></sp></li>
-</ul>
-<h3>Tabla Estudiantes</h3>
-<p>
-    <a th:href="@{/students/create}" th:text="'Añadir Nuevo Estudiante'">añadir_estudiante</a>
-</p>
+<p><a th:href="@{/}" th:text="Índice" class = "centrado"></a></p>
+<h1 th:text="${house.name}">House Name</h1>
+<p><strong>Founder:</strong> <span th:text="${house.founder}">Founder</span></p>
+<p><strong>Mascot:</strong> <span th:text="${house.mascot}">Mascot</span></p>
+<h2>Students in this House</h2>
 <table>
     <tr>
-        <th>Nombre</th>
+        <th>Name</th>
     </tr>
     <tr th:each="student : ${students}">
         <td>
-            <a th:href="@{/student(name=${student.getName()})}" th:text="${student.getName()}">student_name</a>
-        </td>
-        <td>
-            <a th:href="@{/student/update/{name}(name=${student.getName()})}">Editar estudiante</a>
-        </td>
-        <td>
-            <a th:href="@{/student/delete/{name}(name=${student.getName()})}">Borrar</a>
+            <a th:href="@{/student(name=${student.name})}" th:text="${student.name}">Student Name</a>
         </td>
     </tr>
 </table>
+<p><a th:href="@{/house/createStudent/{name}(name=${house.name})}" th:text="Crear" class="centrado"></a></p>
+
 </body>
 </html>

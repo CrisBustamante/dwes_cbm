@@ -1,26 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Crear Estudiante</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Create Student</title>
+    <link rel="stylesheet" th:href="@{/style.css}" />
 </head>
 <body>
-<h1>CREAR ESTUDIANTE</h1>
-<form th:action="@{/student/create}" th:object="${student}" method="post">
-    <p>Nombre: <label>
-        <input type="text" th:field="*{name}">
-    </label></p>
-    <p>Patronus: <label>
-        <input type="text" th:field="*{patronus}">
-    </label></p>
-    <p>Casa: <span th:text="${student.getHouse().getName()}"></span></p>
-    <input type="hidden" th:field="*{house.name}" />
-
-
-    <p>
-        <input type="submit" value="Enviar">
-        <input type="reset" value="Reiniciar">
-    </p>
+<p><a th:href="@{/}" th:text="Índice" class = "centrado"></a></p>
+<h1>Crear Estudiante</h1>
+<form action="#" method="post" th:object="${student}" th:action="@{/house/createStudent/{name}(name=${house.getName()})}">
+    <p>Name: <input type="text" th:field="*{name}"></p>
+    <p>Patronus: <input type="text" th:field="*{patronus}"></p>
+    <p><input type="submit" value="Submit"/> <input type="reset" value="Reset" /></p>
 </form>
 </body>
 </html>
