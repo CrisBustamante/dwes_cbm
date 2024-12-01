@@ -11,4 +11,7 @@ import java.util.List;
 public interface WorkerRepository extends JpaRepository<Worker, Long> {
     @Query("SELECT w FROM Worker w WHERE w.team.id = ?1")
     List<Worker> findByTeamId(Long teamId);
+
+    @Query("SELECT w FROM Worker w")
+    List<Worker> findAll();
 }

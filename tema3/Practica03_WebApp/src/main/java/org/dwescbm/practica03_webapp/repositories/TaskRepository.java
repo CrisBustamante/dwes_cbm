@@ -22,4 +22,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query("SELECT t FROM Task t WHERE t.worker.id = ?1 AND t.worker.team.id = ?2")
     List<Task> findByWorkerIdAndTeamId(Long userId, Long teamId);
 
+    @Query("SELECT t FROM Task t WHERE t.dueDate < CURRENT_DATE AND t.estate != 'cerrada'")
+    List<Task> findDelayedTasks();
+
+    @Query("SELECT t FROM Task t WHERE t.estate = 'abierta' ORDER BY t.creationDate ASC")
+    List<Task> findOpenTasksOrderedByCreationDate();
+
 }

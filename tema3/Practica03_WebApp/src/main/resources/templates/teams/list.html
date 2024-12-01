@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listado de Equipos</title>
+</head>
+<body>
+<h1>Listado de Equipos</h1>
+<a th:href="@{/teams/create}">Crear Nuevo Equipo</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Nombre</th>
+        <th>Miembros</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="team : ${teams}">
+        <td th:text="${team.name}">Nombre</td>
+        <td th:text="${team.workers.size()}">Número de Miembros</td>
+        <td>
+            <a th:href="@{/teams/edit/{id}(id=${team.id})}">Editar</a>
+            <a th:href="@{/teams/delete/{id}(id=${team.id})}" onclick="return confirm('¿Estás seguro de eliminar este equipo?');">Eliminar</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

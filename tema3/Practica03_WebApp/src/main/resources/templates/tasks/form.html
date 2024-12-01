@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulario de Tareas</title>
+</head>
+<body>
+<h1 th:text="${task.id != null ? 'Editar Tarea' : 'Crear Nueva Tarea'}"></h1>
+<form th:action="@{/tasks/save}" th:object="${task}" method="post">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" th:value="*{name}" required>
+    <br>
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" th:text="*{description}" required></textarea>
+    <br>
+    <label for="creationDate">Fecha de Creación:</label>
+    <input type="date" id="creationDate" name="creationDate" th:value="*{creationDate}" required>
+    <br>
+    <label for="dueDate">Fecha de Cierre:</label>
+    <input type="date" id="dueDate" name="dueDate" th:value="*{dueDate}" required>
+    <br>
+    <label for="typeImprovement">Tipo:</label>
+    <select id="typeImprovement" name="typeImprovement" th:value="*{typeImprovement}">
+        <option value="mejora">Mejora</option>
+        <option value="bug">Bug</option>
+        <option value="refactorizacion">Refactorización</option>
+    </select>
+    <br>
+    <label for="estate">Estado:</label>
+    <select id="estate" name="estate" th:value="*{estate}">
+        <option value="abierta">Abierta</option>
+        <option value="en progreso">En Progreso</option>
+        <option value="cerrada">Cerrada</option>
+    </select>
+    <br>
+    <button type="submit">Guardar</button>
+    <a th:href="@{/tasks}">Cancelar</a>
+</form>
+</body>
+</html>

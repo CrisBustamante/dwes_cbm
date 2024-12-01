@@ -3,6 +3,8 @@ package org.dwescbm.practica03_webapp.controllers;
 import org.dwescbm.practica03_webapp.entities.Task;
 import org.dwescbm.practica03_webapp.entities.Team;
 import org.dwescbm.practica03_webapp.entities.Worker;
+import org.dwescbm.practica03_webapp.services.TeamService;
+import org.dwescbm.practica03_webapp.services.WorkerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -60,7 +62,7 @@ public class TaskController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
-        taskService.delete(id);
+        taskService.deleteById(id);
         return "redirect:/tasks";
     }
 
