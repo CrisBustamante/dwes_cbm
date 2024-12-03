@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Tarea</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Editar Tarea</h1>
+<form th:action="@{/tasks/edit/{id}(id=${task.id})}" th:object="${task}" method="post">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+    <br>
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" th:field="*{description}" required></textarea>
+    <br>
+    <label for="type">Tipo:</label>
+    <select id="type" name="type" th:field="*{type}">
+        <option value="MEJORA" th:selected="${task.type == 'MEJORA'}">Mejora</option>
+        <option value="BUG" th:selected="${task.type == 'BUG'}">Bug</option>
+        <option value="REFACTORIZACION" th:selected="${task.type == 'REFACTORIZACION'}">Refactorización</option>
+    </select>
+    <br>
+    <label for="status">Estado:</label>
+    <select id="status" name="status" th:field="*{estate}">
+        <option value="ABIERTA" th:selected="${task.status == 'ABIERTA'}">Abierta</option>
+        <option value="EN_PROGRESO" th:selected="${task.status == 'EN_PROGRESO'}">En Progreso</option>
+        <option value="CERRADA" th:selected="${task.status == 'CERRADA'}">Cerrada</option>
+    </select>
+    <br>
+    <label for="openingDate">Fecha de Apertura:</label>
+    <input type="date" id="openingDate" name="openingDate" th:field="*{openingDate}" required>
+    <br>
+    <label for="plannedClosingDate">Fecha Planificada de Cierre:</label>
+    <input type="date" id="plannedClosingDate" name="plannedClosingDate" th:field="*{plannedClosingDate}" required>
+    <br>
+    <label for="workers">Trabajadores Asignados:</label>
+    <select id="workers" name="workers" th:field="*{workers}" multiple>
+        <option th:each="worker : ${workers}" th:value="${worker.id}" th:text="${worker.name}"
+                th:selected="${task.workers.contains(worker)}"></option>
+    </select>
+    <br>
+    <button type="submit">Guardar Cambios</button>
+</form>
+<a href="/tasks">Volver a la lista</a>
+</body>
+</html>

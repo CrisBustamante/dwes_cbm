@@ -1,68 +1,79 @@
 package org.dwescbm.practica03_webapp.controllers;
 
 import org.dwescbm.practica03_webapp.entities.Task;
-import org.dwescbm.practica03_webapp.entities.Team;
 import org.dwescbm.practica03_webapp.entities.Worker;
-import org.dwescbm.practica03_webapp.services.TeamService;
+import org.dwescbm.practica03_webapp.services.TaskService;
 import org.dwescbm.practica03_webapp.services.WorkerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.dwescbm.practica03_webapp.services.TaskService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/tasks")
 public class TaskController {
 
     private final TaskService taskService;
-    private final TeamService teamService;
     private final WorkerService workerService;
 
-    public TaskController(TaskService taskService, TeamService teamService, WorkerService workerService) {
+    public TaskController(TaskService taskService, WorkerService workerService) {
         this.taskService = taskService;
-        this.teamService = teamService;
         this.workerService = workerService;
     }
 
+    // Página para listar todas las tareas
     @GetMapping
-    public String getAllTasks(Model model) {
-        model.addAttribute("tasks", taskService.findAll());
-        return "tasks/list";
+    public String listTasks(Model model) {
+        List<Task> tasks = taskService.listAllTasks();
+        model.addAttribute("tasks", tasks);
+        return "edit"; // Referencia a la plantilla HTML
     }
 
+    // Manejar el filtro de tareas
+    @PostMapping("/filter")
+    public String filterTasks(@RequestParam(required = false) String taskName,
+                              @RequestParam(required = false) String estate,
+                              Model model) {
+        List<Task> filteredTasks = taskService.filterTasks(taskName, estate);
+        model.addAttribute("tasks", filteredTasks);
+        return "edit"; // Reutiliza la plantilla de listar tareas
+    }
+
+    // Página para crear una tarea (formulario)
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String createTaskForm(Model model) {
         model.addAttribute("task", new Task());
-        model.addAttribute("teams", teamService.findAll());
-        model.addAttribute("workers", workerService.findAll());
-        return "tasks/form";
+        model.addAttribute("workers", workerService.listAllWorkers());
+        return "tasks/create";
     }
 
-    @PostMapping("/save")
-    public String save(@ModelAttribute Task task, BindingResult result) {
-        if (result.hasErrors()) {
-            return "tasks/form";
-        }
-        taskService.save(task);
+    // Procesar la creación de una tarea
+    @PostMapping("/create")
+    public String createTask(@ModelAttribute Task task, @RequestParam List<Long> workers) {
+        List<Worker> assignedWorkers = workerService.getWorkersByIds(workers);
+        task.setWorkers(assignedWorkers);
+        taskService.createTask(task);
         return "redirect:/tasks";
     }
 
+
+    // Página para editar una tarea (formulario)
     @GetMapping("/edit/{id}")
-    public String editForm(@PathVariable Long id, Model model) {
-        Task task = taskService.findById(id);
-        if (task == null) {
-            return "redirect:/tasks";
-        }
+    public String editTaskForm(@PathVariable Long id, Model model) {
+        Task task = taskService.getTaskById(id).orElseThrow(() -> new IllegalArgumentException("Tarea no encontrada."));
+        List<Worker> workers = workerService.listAllWorkers();
         model.addAttribute("task", task);
-        model.addAttribute("teams", teamService.findAll());
-        model.addAttribute("workers", workerService.findAll());
-        return "tasks/form";
+        model.addAttribute("workers", workers);
+        return "tasks/edit";
     }
 
-    @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
-        taskService.deleteById(id);
+    // Procesar la edición de una tarea
+    @PostMapping("/edit/{id}")
+    public String updateTask(@PathVariable Long id, @ModelAttribute Task task, @RequestParam List<Long> workers) {
+        List<Worker> assignedWorkers = workerService.getWorkersByIds(workers);
+        task.setWorkers(assignedWorkers);
+        taskService.updateTask(id, task);
         return "redirect:/tasks";
     }
 

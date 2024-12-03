@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Página Principal</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Página Principal</h1>
+<nav>
+  <ul>
+    <li><a href="/tasks">Gestionar Tareas</a></li>
+    <li><a href="/workers">Gestionar Trabajadores</a></li>
+    <li><a href="/teams">Gestionar Equipos</a></li>
+    <li><a href="/dashboard">Cuadro de Mando</a></li>
+  </ul>
+</nav>
+
+<h2>Filtrar Tareas</h2>
+<form action="/tasks/filter" method="post">
+  <label for="taskName">Nombre de la Tarea:</label>
+  <input type="text" id="taskName" name="taskName">
+  <br>
+  <label for="status">Estado:</label>
+  <select id="status" name="status">
+    <option value="">--Seleccionar--</option>
+    <option value="ABIERTA">Abierta</option>
+    <option value="EN_PROGRESO">En Progreso</option>
+    <option value="CERRADA">Cerrada</option>
+  </select>
+  <br>
+  <button type="submit">Filtrar</button>
+</form>
+
+</body>
+</html>

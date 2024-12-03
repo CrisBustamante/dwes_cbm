@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Trabajador</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Editar Trabajador</h1>
+<form th:action="@{/workers/edit/{id}(id=${worker.id})}" th:object="${worker}" method="post">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+    <br>
+    <label for="age">Edad:</label>
+    <input type="number" id="age" name="age" th:field="*{age}" required>
+    <br>
+    <label for="teamWork">Grupo de Trabajo:</label>
+    <select id="teamWork" name="teamWorkId">
+        <option th:each="team : ${teams}"
+                th:value="${team.id}"
+                th:text="${team.name}"
+                th:selected="${worker.teamWork != null && team.id == worker.teamWork.id}">
+        </option>
+    </select>
+    <br>
+    <button type="submit">Guardar Cambios</button>
+</form>
+
+
+<a href="/workers">Volver a la lista</a>
+</body>
+</html>

@@ -2,28 +2,18 @@ package org.dwescbm.practica03_webapp.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-//Anotaciones lombok
+@Entity
 @Getter
 @Setter
-@ToString
-@NoArgsConstructor
-
-//Anotaciones Hibernate
-@Entity
-@Table(name = "tasks")
 public class Task {
-
-    //Indicamos clave primaria
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Clave primaria se genera automaticamente
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -32,21 +22,23 @@ public class Task {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "creation_date", nullable = false)
-    private Date creationDate;
+    @Column(name = "openingDate", nullable = false)
+    private LocalDate openingDate;
 
-    @Column(name = "due_date", nullable = false)
-    private Date dueDate;
+    @Column(name = "plannedClosingDate", nullable = false)
+    private LocalDate plannedClosingDate;
 
-    @Column(name = "type_improvement", nullable = false)
-    private String typeImprovement;
+    @Enumerated(EnumType.STRING)
+    private TaskType type;
 
-    @Column(name = "estate", nullable = false)
-    private String estate;
+    @Enumerated(EnumType.STRING)
+    private TaskEstate estate;
 
-
-
-    @ManyToMany(mappedBy = "tasks")
-    private Set<Worker> workers = new HashSet<>();
-
+    @ManyToMany
+    @JoinTable(
+            name = "task_worker",
+            joinColumns = @JoinColumn(name = "taskId"),
+            inverseJoinColumns = @JoinColumn(name = "workerId")
+    )
+    private List<Worker> workers = new ArrayList<>();
 }

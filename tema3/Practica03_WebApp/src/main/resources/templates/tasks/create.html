@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Crear Tarea</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Crear Nueva Tarea</h1>
+<form th:action="@{/tasks/create}" th:object="${task}" method="post">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+    <br>
+    <label for="description">Descripción:</label>
+    <textarea id="description" name="description" th:field="*{description}" required></textarea>
+    <br>
+    <label for="type">Tipo:</label>
+    <select id="type" name="type" th:field="*{type}">
+        <option value="MEJORA">Mejora</option>
+        <option value="BUG">Bug</option>
+        <option value="REFACTORIZACION">Refactorización</option>
+    </select>
+    <br>
+    <label for="status">Estado:</label>
+    <select id="status" name="status" th:field="*{estate}">
+        <option value="ABIERTA">Abierta</option>
+        <option value="EN_PROGRESO">En Progreso</option>
+        <option value="CERRADA">Cerrada</option>
+    </select>
+    <br>
+    <label for="openingDate">Fecha de Apertura:</label>
+    <input type="date" id="openingDate" name="openingDate" th:field="*{openingDate}" required>
+    <br>
+    <label for="plannedClosingDate">Fecha Planificada de Cierre:</label>
+    <input type="date" id="plannedClosingDate" name="plannedClosingDate" th:field="*{plannedClosingDate}" required>
+    <br>
+    <label for="workers">Trabajadores Asignados:</label>
+    <select id="workers" name="workers" th:field="*{workers}" multiple>
+        <option th:each="worker : ${workers}" th:value="${worker.id}" th:text="${worker.name}"></option>
+    </select>
+    <br>
+    <button type="submit">Crear</button>
+</form>
+<a href="/tasks">Volver a la lista</a>
+</body>
+</html>

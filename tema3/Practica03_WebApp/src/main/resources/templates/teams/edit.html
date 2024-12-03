@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Editar Equipo</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Editar Equipo</h1>
+<form th:action="@{/teams/edit/{id}(id=${team.id})}" th:object="${team}" method="post">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+    <button type="submit">Guardar Cambios</button>
+</form>
+<a href="/teams">Volver a la lista</a>
+</body>
+</html>

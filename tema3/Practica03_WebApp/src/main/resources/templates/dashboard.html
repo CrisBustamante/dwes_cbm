@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Cuadro de Mando</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<h1>Cuadro de Mando</h1>
+
+<h2>Tareas Retrasadas</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Fecha Planificada de Cierre</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="task : ${delayedTasks}" >
+    <td th:text="${task.name}"></td>
+    <td th:text="${task.plannedClosingDate}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Tareas en Curso de un Trabajador</h2>
+<form action="/dashboard" method="get">
+  <label for="workerId">Seleccionar Trabajador:</label>
+  <select id="workerId" name="workerId">
+    <option value="">--Seleccionar--</option>
+    <option th:each="worker : ${workers}" th:value="${worker.id}" th:text="${worker.name}" th:selected="${selectedWorkerId == worker.id}"></option>
+  </select>
+  <button type="submit">Mostrar</button>
+</form>
+<table>
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Fecha Planificada de Cierre</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="task : ${tasksInProgress}" >
+    <td th:text="${task.name}"></td>
+    <td th:text="${task.plannedClosingDate}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Tareas Abiertas Ordenadas por Fecha</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Fecha de Apertura</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="task : ${openTasksOrdered}" >
+    <td th:text="${task.name}"></td>
+    <td th:text="${task.openingDate}"></td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Estadísticas de Tipos de Tareas</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Tipo</th>
+    <th>Porcentaje</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="entry : ${taskTypeStats}">
+    <td th:text="${entry.key}"></td>
+    <td th:text="${entry.value} + '%'"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

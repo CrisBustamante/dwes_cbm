@@ -1,41 +1,47 @@
 package org.dwescbm.practica03_webapp.services;
 
 import org.dwescbm.practica03_webapp.entities.Worker;
-import org.dwescbm.practica03_webapp.entities.Team;
-import org.dwescbm.practica03_webapp.entities.Task;
-import org.dwescbm.practica03_webapp.repositories.TeamRepository;
-import org.dwescbm.practica03_webapp.repositories.TaskRepository;
 import org.dwescbm.practica03_webapp.repositories.WorkerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WorkerService {
     private final WorkerRepository workerRepository;
-    private final TaskRepository taskRepository;
-    private final TeamRepository teamRepository;
-
-    public WorkerService(WorkerRepository workerRepository, TaskRepository taskRepository, TeamRepository teamRepository) {
+    public WorkerService(WorkerRepository workerRepository) {
         this.workerRepository = workerRepository;
-        this.taskRepository = taskRepository;
-        this.teamRepository = teamRepository;
     }
 
-    public List<Worker> findAll() {
-        return workerRepository.findAll();
-    }
-
-    public Worker findById(Long id) {
-        return workerRepository.findById(id).orElse(null);
-    }
-
-    public Worker save(Worker worker) {
+    // Crear un trabajador
+    public Worker createWorker(Worker worker) {
         return workerRepository.save(worker);
     }
 
-    public void delete(Worker worker) {
-        workerRepository.deleteById(worker.getId());
+    // Listar todos los trabajadores
+    public List<Worker> listAllWorkers() {
+        return workerRepository.findAll();
+    }
+
+    public List<Worker> getWorkersByIds(List<Long> ids) {
+        return workerRepository.findAllById(ids);
+    }
+
+    // Ver detalles de un trabajador por ID, incluyendo sus tareas asignadas
+    public Optional<Worker> getWorkerById(Long id) {
+        return workerRepository.findById(id);
+    }
+
+    // Modificar los datos de un trabajador
+    public Worker updateWorker(Long id, Worker updatedWorker) {
+        return workerRepository.findById(id)
+                .map(worker -> {
+                    worker.setName(updatedWorker.getName());
+                    worker.setAge(updatedWorker.getAge());
+                    worker.setTeam(updatedWorker.getTeam());
+                    worker.setTasks(updatedWorker.getTasks());
+                    return workerRepository.save(worker);
+                }).orElseThrow(() -> new IllegalArgumentException("Trabajador no encontrado con ID: " + id));
     }
 }
