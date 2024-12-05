@@ -27,7 +27,7 @@ public class TaskController {
     public String listTasks(Model model) {
         List<Task> tasks = taskService.listAllTasks();
         model.addAttribute("tasks", tasks);
-        return "edit"; // Referencia a la plantilla HTML
+        return "tasks/list"; // Referencia a la plantilla HTML
     }
 
     // Manejar el filtro de tareas
@@ -37,7 +37,7 @@ public class TaskController {
                               Model model) {
         List<Task> filteredTasks = taskService.filterTasks(taskName, estate);
         model.addAttribute("tasks", filteredTasks);
-        return "edit"; // Reutiliza la plantilla de listar tareas
+        return "tasks/list"; // Reutiliza la plantilla de listar tareas
     }
 
     // Página para crear una tarea (formulario)

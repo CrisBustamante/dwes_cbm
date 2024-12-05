@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Editar Tarea</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
 <h1>Editar Tarea</h1>
@@ -22,9 +22,9 @@
     <br>
     <label for="status">Estado:</label>
     <select id="status" name="status" th:field="*{estate}">
-        <option value="ABIERTA" th:selected="${task.status == 'ABIERTA'}">Abierta</option>
-        <option value="EN_PROGRESO" th:selected="${task.status == 'EN_PROGRESO'}">En Progreso</option>
-        <option value="CERRADA" th:selected="${task.status == 'CERRADA'}">Cerrada</option>
+        <option value="ABIERTA" th:selected="${task.estate == 'ABIERTA'}">Abierta</option>
+        <option value="EN_PROGRESO" th:selected="${task.estate == 'EN_PROGRESO'}">En Progreso</option>
+        <option value="CERRADA" th:selected="${task.estate == 'CERRADA'}">Cerrada</option>
     </select>
     <br>
     <label for="openingDate">Fecha de Apertura:</label>

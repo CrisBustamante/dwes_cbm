@@ -13,12 +13,12 @@
     <label for="age">Edad:</label>
     <input type="number" id="age" name="age" th:field="*{age}" required>
     <br>
-    <label for="teamWork">Grupo de Trabajo:</label>
-    <select id="teamWork" name="teamWorkId">
+    <label for="team">Grupo de Trabajo:</label>
+    <select id="team" name="teamId">
         <option th:each="team : ${teams}"
                 th:value="${team.id}"
                 th:text="${team.name}"
-                th:selected="${worker.teamWork != null && team.id == worker.teamWork.id}">
+                th:selected="${worker.team != null && team.id == worker.team.id}">
         </option>
     </select>
     <br>
